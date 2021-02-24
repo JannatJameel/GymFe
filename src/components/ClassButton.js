@@ -2,28 +2,33 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createClass } from "../store/actions/classActions";
 // Styling
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 export default function FormDialog() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const [newClass, setNewClass] = useState({
-      name: "",
-      availableSeats: 0,
-      bookedSeats: 0,
-      price: 0,
-      date: "",
-      time: "",
-    });
+  const [newClass, setNewClass] = useState({
+    name: "",
+    availableSeats: "",
+    bookedSeats: "",
+    price: "",
+    date: "",
+    time: "",
+    gymId: 1,
+  });
 
   const [open, setOpen] = useState(false);
 
@@ -36,7 +41,7 @@ export default function FormDialog() {
   };
 
   const handleCreate = () => {
-    // dispatch(createGym(gym));
+    dispatch(createClass(newClass));
     handleClose();
   };
 
@@ -51,7 +56,11 @@ export default function FormDialog() {
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
         ADD CLASS
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Add Gym</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
@@ -79,7 +88,7 @@ export default function FormDialog() {
             value={newClass.availableSeats}
             onChange={handleChange}
           />
-           <TextField
+          <TextField
             autoFocus
             margin="dense"
             id="price"
@@ -90,8 +99,23 @@ export default function FormDialog() {
             value={newClass.price}
             onChange={handleChange}
           />
-          <TextField type="date" className="form-control" fullWidth value={newClass.date}  onChange={handleChange}/>
-          <TextField type="time" className="form-control" fullWidth value={newClass.time}  onChange={handleChange}/>
+          <TextField
+            name="date"
+            type="date"
+            id="date"
+            fullWidth
+            value={newClass.date}
+            onChange={handleChange}
+          />
+          <TextField
+            name="time"
+            type="time"
+            id="time"
+            className="form-control"
+            fullWidth
+            value={newClass.time}
+            onChange={handleChange}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 // Styling
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 // Components
 import ClassButton from "./ClassButton";
-// import ClassCard from "./ClassCard";
-
+import ClassCard from "./ClassCard";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -27,12 +27,12 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(8),
   },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   cardContent: {
     flexGrow: 1,
@@ -42,8 +42,17 @@ const useStyles = makeStyles((theme) => ({
 export default function ClassList() {
   const classes = useStyles();
 
-//   const classes = useSelector((state) => state.classReducer.classes);
+  const gymClasses = useSelector((state) => state.classReducer.classes);
+  const { gymSlug } = useParams();
 
+  const foundgym = useSelector((state) =>
+    state.gymReducer.gyms.find((gym) => gym.slug === gymSlug)
+  );
+
+  const filteredClasses = gymClasses.filter(
+    (gymClass) => gymClass.gymId === foundgym.id
+  );
+  console.log("filterd classes", filteredClasses);
 
   return (
     <React.Fragment>
@@ -52,7 +61,13 @@ export default function ClassList() {
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            <Typography
+              component="h1"
+              variant="h2"
+              align="center"
+              color="textPrimary"
+              gutterBottom
+            >
               CLASSES
             </Typography>
             {/* <Typography variant="h5" align="center" color="textSecondary" paragraph>
@@ -63,7 +78,7 @@ export default function ClassList() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                    <ClassButton/>
+                  <ClassButton />
                 </Grid>
                 {/* <Grid item>
                   <Button variant="outlined" color="primary">
@@ -77,12 +92,12 @@ export default function ClassList() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {/* {gyms.map((gym) => (
-                <GymCard gym={gym}/>
-            ))} */}
+            {gymClasses.map((gymClass) => (
+              <ClassCard gymClass={gymClass} />
+            ))}
           </Grid>
         </Container>
       </main>
     </React.Fragment>
   );
-};
+}

@@ -6,7 +6,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -36,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GymCard = ({ gym }) => {
+const ClassCard = ({ gymClass }) => {
   const classes = useStyles();
 
   return (
@@ -49,16 +48,14 @@ const GymCard = ({ gym }) => {
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
-            {gym.name}
+            {gymClass.name}
           </Typography>
-          <Typography>Location : {gym.location}</Typography>
+          <Typography>Date : {gymClass.date}</Typography>
         </CardContent>
         <CardActions>
-          <Link to={`/gyms/${gym.slug}/classes`}>
-            <Button size="small" color="primary">
-              View Classes
-            </Button>
-          </Link>
+          <Button size="small" color="primary">
+            View Classes
+          </Button>
           {/* <Button size="small" color="primary">
                     Edit
                 </Button> */}
@@ -68,4 +65,4 @@ const GymCard = ({ gym }) => {
   );
 };
 
-export default GymCard;
+export default ClassCard;
