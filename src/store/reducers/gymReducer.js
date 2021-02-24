@@ -13,6 +13,11 @@ const gymReducer = (state=initialState, action) => {
                 gyms: action.payload, 
                 loading: false
             };
+        case types.CREATE_GYM:
+            return {
+                ...state,
+                gyms: [...state.gyms, action.payload],
+            };
         default: return state;
     };
 };
