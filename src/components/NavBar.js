@@ -92,11 +92,11 @@ const NavBar = () => {
             <Link
               variant="button"
               color="textPrimary"
-              to="/classes"
+              to="/my-classes"
               className={classes.link}
               style={{ textDecoration: "none" }}
             >
-              Classes
+              My Classes
             </Link>
           </nav>
           {!active && (

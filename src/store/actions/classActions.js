@@ -32,3 +32,21 @@ export const createClass = (newClass) => {
     }
   };
 };
+
+export const bookClass = (bookedClass) => {
+  return async (dispatch) => {
+      try {
+          // const formData = new FormData();
+          // for(const Key in updatedClass) formData.append(Key, updatedClass[Key]);
+          console.log("Boookinnng");
+          await instance.post(`/classes/bookclass`, bookedClass);
+          const res = await instance.get(`/classes/${bookedClass.id}`);
+          dispatch({
+              type: types.BOOK_CLASS, 
+              payload: res.data
+          });
+      } catch(error) {
+          console.log("error:", error);
+      }
+  }
+};

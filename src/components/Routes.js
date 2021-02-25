@@ -7,15 +7,13 @@ import Signin from "./Signin";
 import GymList from "./GymList";
 import ClassList from "./ClassList";
 import ClassDetails from "./ClassDetails";
+import Home from "./Home";
+import UserClasses from "./UserClasses";
 
 const Routes = () => {
   const admin = useSelector((state) => state.userReducer.admin);
   const user = useSelector((state) => state.userReducer.user);
   const gymClasses = useSelector((state) => state.classReducer.classes);
-
-  console.log("Admin", admin);
-  console.log("User", user);
-
 
   return (
 
@@ -35,11 +33,14 @@ const Routes = () => {
       <Route path="/classes/:classSlug">
         <ClassDetails />
       </Route>
+      <Route path="/my-classes">
+        <UserClasses />
+      </Route>
       <Route path="/gyms">
         <GymList />
       </Route>
       <Route exact path="/">
-        <div>Hellooo</div>
+        <Home/>
       </Route>
     </Switch>
   );

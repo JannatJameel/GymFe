@@ -1,13 +1,17 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import decode from "jwt-decode";
+import { bookClass } from "../store/actions/classActions";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
+import Button from "@material-ui/core/Button";
 
+import bookedClasses from "../bookedClasses";
 
 const useStyles = makeStyles((theme) => ({
   mainFeaturedPost: {
@@ -42,10 +46,25 @@ const useStyles = makeStyles((theme) => ({
 export default function ClassDetail() {
   const classes = useStyles();
 
+  const dispatch= useDispatch();
+
   const { classSlug } = useParams();
   const foundClass = useSelector((state) =>
     state.classReducer.classes.find((gymclass) => gymclass.slug === classSlug)
   );
+  const user = decode(localStorage.getItem("myToken"));
+
+  const booking = {
+      id: foundClass.id,
+      users: [user.id],
+  };
+
+  const handleBook = () => {
+    dispatch(bookClass(booking));
+  };
+
+  const updatedClasses = useSelector(state => state.classReducer.classes);
+  console.log("New class State", updatedClasses);
 
   return (
     <Paper className={classes.mainFeaturedPost}>
@@ -73,6 +92,11 @@ export default function ClassDetail() {
             <Typography variant="h5" color="inherit" paragraph>
               Available Seats: {foundClass.availableSeats}
             </Typography>
+            {!user.admin &&
+            <Button variant="contained" color="primary" onClick={handleBook}>
+                Book
+            </Button>
+            }
           </div>
         </Grid>
       </Grid>

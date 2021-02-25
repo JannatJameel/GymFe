@@ -59,7 +59,6 @@ export const signout = () => {
     localStorage.removeItem("myToken");
     delete instance.defaults.headers.common.Authorization
     const token = localStorage.getItem("myToken");
-    console.log("Sign out testing", decode(token).admin);
     if(decode(token).admin){
         return ({
             type: types.SET_ADMIN,

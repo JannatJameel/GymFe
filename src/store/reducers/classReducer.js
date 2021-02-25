@@ -18,6 +18,13 @@ const classReducer = (state=initialState, action) => {
                 ...state,
                 classes: [...state.classes, action.payload],
             };
+        case types.BOOK_CLASS:
+            const updatedClass = action.payload;
+            return {
+                ...state,
+                classes: state.classes.map(gymclass =>
+                    gymclass.id === updatedClass.id? updatedClass : gymclass),
+            };
         default: return state;
     };
 };
