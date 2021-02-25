@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
 // Components
 import ClassButton from "./ClassButton";
 import ClassCard from "./ClassCard";
@@ -99,14 +100,28 @@ export default function ClassList({ gymClasses }) {
                     Secondary action
                   </Button>
                 </Grid> */}
+                <br />
               </Grid>
+            </div>
+            <div className={classes.heroButtons} align="center">
+              <SearchBar setQuery={setQuery} />
+              <Button variant="contained" onClick={toggleFree}>
+                Free
+              </Button>
             </div>
           </Container>
         </div>
-        <SearchBar setQuery={setQuery} />
-        <Button variant="contained" onClick={toggleFree}>
-          Free
-        </Button>
+        {/* <Box
+          display="ab"
+          justifyContent="center"
+          m={1}
+          p={1}
+          bgcolor="background.paper"
+          maxWidth="300px"
+        > */}
+
+        {/* </Box> */}
+
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           {!free ? (
