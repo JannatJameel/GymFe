@@ -17,7 +17,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
-export default function ClassButton({gymId}) {
+export default function ClassButton({ gymId }) {
   const dispatch = useDispatch();
 
   const [newClass, setNewClass] = useState({
@@ -59,7 +59,7 @@ export default function ClassButton({gymId}) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add Gym</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add Class</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
             To subscribe to this website, please enter your email address here. We will send updates

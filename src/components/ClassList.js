@@ -2,7 +2,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchClasses } from "../store/actions/classActions";
-
+import SearchBar from "./SearchBar";
+import { useState } from "react";
+import Button from "@material-ui/core/Button";
 // Styling
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -41,25 +43,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClassList({gymClasses}) {
+export default function ClassList({ gymClasses }) {
   const classes = useStyles();
+
+  const [query, setQuery] = useState("");
+  const [free, setFree] = useState(false);
+
+  const toggleFree = () => setFree(free === true ? false : true);
 
   const { gymSlug } = useParams();
   const foundgym = useSelector((state) =>
     state.gymReducer.gyms.find((gym) => gym.slug === gymSlug)
   );
 
-  const filteredClasses = gymClasses.filter(
-    (gymClass) => gymClass.gymId === foundgym.id
-  );
+  const filteredClasses = gymClasses
+    .filter((gymClass) => gymClass.gymId === foundgym.id)
+    .filter(
+      (gClass) =>
+        gClass.name.toLowerCase().includes(query.toLowerCase()) ||
+        gClass.date.includes(query)
+    );
 
-  if(!foundgym) return <p>Hellooo</p>;
+  const freeClasses = gymClasses.filter((gymClass) => gymClass.price === 0);
+  const admin = useSelector((state) => state.userReducer.admin);
+  console.log("freeClasses", freeClasses);
+  if (!foundgym) return <p>Hellooo</p>;
 
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
         {/* Hero unit */}
+
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography
@@ -78,9 +93,7 @@ export default function ClassList({gymClasses}) {
             </Typography> */}
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <ClassButton gymId={foundgym.id}/>
-                </Grid>
+                <Grid item>{admin && <ClassButton gymId={foundgym.id} />}</Grid>
                 {/* <Grid item>
                   <Button variant="outlined" color="primary">
                     Secondary action
@@ -90,13 +103,25 @@ export default function ClassList({gymClasses}) {
             </div>
           </Container>
         </div>
+        <SearchBar setQuery={setQuery} />
+        <Button variant="contained" onClick={toggleFree}>
+          Free
+        </Button>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
-          <Grid container spacing={4}>
-            {filteredClasses.map((gymClass) => (
-              <ClassCard gymClass={gymClass} key={gymClass.id}/>
-            ))}
-          </Grid>
+          {!free ? (
+            <Grid container spacing={4}>
+              {filteredClasses.map((gymClass) => (
+                <ClassCard gymClass={gymClass} key={gymClass.id} />
+              ))}
+            </Grid>
+          ) : (
+            <Grid container spacing={4}>
+              {freeClasses.map((gymClass) => (
+                <ClassCard gymClass={gymClass} key={gymClass.id} />
+              ))}
+            </Grid>
+          )}
         </Container>
       </main>
     </React.Fragment>

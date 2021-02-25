@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Box from '@material-ui/core/Box';
+import Box from "@material-ui/core/Box";
 
 // import Link from '@material-ui/core/Link';
 import { makeStyles } from "@material-ui/core/styles";
@@ -51,7 +51,7 @@ const NavBar = () => {
   };
 
   const checkActive = () => {
-    if(user || admin) {
+    if (user || admin) {
       return true;
     }
   };
@@ -67,16 +67,16 @@ const NavBar = () => {
         className={classes.appBar}
       >
         <Toolbar className={classes.toolbar}>
-            <Typography
-              variant="h6"
-              color="inherit"
-              noWrap
-              className={classes.toolbarTitle}
-              >
-            <Link to="/" style={{textDecoration: 'none' }}>
+          <Typography
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.toolbarTitle}
+          >
+            <Link to="/" style={{ textDecoration: "none" }}>
               <Box fontWeight="fontWeightBold">STAY ACTIVE</Box>
             </Link>
-            </Typography>
+          </Typography>
           <nav>
             {/* <Link to="/gyms"> */}
             <Link
@@ -84,7 +84,7 @@ const NavBar = () => {
               color="textPrimary"
               to="/gyms"
               className={classes.link}
-              style={{textDecoration: 'none' }}
+              style={{ textDecoration: "none" }}
             >
               Gyms
             </Link>
@@ -94,7 +94,7 @@ const NavBar = () => {
               color="textPrimary"
               to="/classes"
               className={classes.link}
-              style={{textDecoration: 'none' }}
+              style={{ textDecoration: "none" }}
             >
               Classes
             </Link>
@@ -108,7 +108,7 @@ const NavBar = () => {
             >
               Sign In
             </Button>
-          )}{" "}
+          )}
           {active && (
             <Button
               href="/signin"
