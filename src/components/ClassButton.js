@@ -17,7 +17,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
-export default function FormDialog() {
+export default function ClassButton({gymId}) {
   const dispatch = useDispatch();
 
   const [newClass, setNewClass] = useState({
@@ -27,7 +27,7 @@ export default function FormDialog() {
     price: 0,
     date: "",
     time: "",
-    gymId: 1,
+    gymId: gymId,
   });
 
   const [open, setOpen] = useState(false);
@@ -48,8 +48,6 @@ export default function FormDialog() {
   const handleChange = (event) => {
     setNewClass({ ...newClass, [event.target.name]: event.target.value });
   };
-
-  console.log("");
 
   return (
     <div>

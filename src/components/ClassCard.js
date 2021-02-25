@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -53,9 +55,11 @@ const ClassCard = ({ gymClass }) => {
           <Typography>Date : {gymClass.date}</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
-            View Classes
-          </Button>
+          <Link to={`/classes/${gymClass.slug}`}>
+            <Button size="small" color="primary">
+              View Details
+            </Button>
+          </Link>
           {/* <Button size="small" color="primary">
                     Edit
                 </Button> */}

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchClasses } from "../store/actions/classActions";
+
 // Styling
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -43,12 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ClassList({gymClasses}) {
   const classes = useStyles();
 
-//   const dispatch = useDispatch();
-//   dispatch(fetchClasses());
-
-//   const gymClasses = useSelector((state) => state.classReducer.classes);
   const { gymSlug } = useParams();
-
   const foundgym = useSelector((state) =>
     state.gymReducer.gyms.find((gym) => gym.slug === gymSlug)
   );
@@ -56,7 +52,8 @@ export default function ClassList({gymClasses}) {
   const filteredClasses = gymClasses.filter(
     (gymClass) => gymClass.gymId === foundgym.id
   );
-  console.log("gymClasses", gymClasses);
+
+  if(!foundgym) return <p>Hellooo</p>;
 
   return (
     <React.Fragment>
@@ -82,7 +79,7 @@ export default function ClassList({gymClasses}) {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <ClassButton />
+                  <ClassButton gymId={foundgym.id}/>
                 </Grid>
                 {/* <Grid item>
                   <Button variant="outlined" color="primary">
@@ -96,7 +93,7 @@ export default function ClassList({gymClasses}) {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {gymClasses.map((gymClass) => (
+            {filteredClasses.map((gymClass) => (
               <ClassCard gymClass={gymClass} key={gymClass.id}/>
             ))}
           </Grid>

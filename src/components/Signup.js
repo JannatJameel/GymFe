@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({admin}) {
   const classes = useStyles();
 
   const [user, setUser] = useState({
-    admin: false,
+    admin: admin,
     firstName: "",
     lastName: "",
     username: "",

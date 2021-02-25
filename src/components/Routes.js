@@ -6,6 +6,7 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import GymList from "./GymList";
 import ClassList from "./ClassList";
+import ClassDetails from "./ClassDetails";
 
 const Routes = () => {
   const admin = useSelector((state) => state.userReducer.admin);
@@ -14,20 +15,25 @@ const Routes = () => {
 
   console.log("Admin", admin);
   console.log("User", user);
-  console.log("Class State", gymClasses);
 
 
   return (
 
     <Switch>
+      <Route path="/admin">
+        <Signup admin={true}/>
+      </Route>
       <Route path="/signup">
-        <Signup />
+        <Signup admin={false}/>
       </Route>
       <Route path="/signin">
         <Signin />
       </Route>
       <Route path="/gyms/:gymSlug/classes">
         <ClassList gymClasses={gymClasses}/>
+      </Route>
+      <Route path="/classes/:classSlug">
+        <ClassDetails />
       </Route>
       <Route path="/gyms">
         <GymList />

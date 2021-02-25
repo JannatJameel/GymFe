@@ -58,10 +58,19 @@ export const signin = (userData, history) => {
 export const signout = () => {
     localStorage.removeItem("myToken");
     delete instance.defaults.headers.common.Authorization
-    return ({
-        type: types.SET_USER,
-        payload: null
-    });
+    const token = localStorage.getItem("myToken");
+    console.log("Sign out testing", decode(token).admin);
+    if(decode(token).admin){
+        return ({
+            type: types.SET_ADMIN,
+            payload: null
+        });
+    } else {
+        return ({
+            type: types.SET_USER,
+            payload: null
+        });
+    };
 };
 
 export const checkForToken = () => (dispatch) => {

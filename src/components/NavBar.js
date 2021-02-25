@@ -1,12 +1,17 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { signout } from "../store/actions/authActions";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 // Styling
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Box from '@material-ui/core/Box';
+
 // import Link from '@material-ui/core/Link';
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +40,22 @@ const NavBar = () => {
   const classes = useStyles();
 
   const user = useSelector((state) => state.userReducer.user);
+  const admin = useSelector((state) => state.userReducer.admin);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleSignout = () => {
+    dispatch(signout());
+    history.push("/");
+  };
+
+  const checkActive = () => {
+    if(user || admin) {
+      return true;
+    }
+  };
+  const active = checkActive();
 
   return (
     <>
@@ -46,14 +67,16 @@ const NavBar = () => {
         className={classes.appBar}
       >
         <Toolbar className={classes.toolbar}>
-          <Typography
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.toolbarTitle}
-          >
-            Company name
-          </Typography>
+            <Typography
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.toolbarTitle}
+              >
+            <Link to="/" style={{textDecoration: 'none' }}>
+              <Box fontWeight="fontWeightBold">STAY ACTIVE</Box>
+            </Link>
+            </Typography>
           <nav>
             {/* <Link to="/gyms"> */}
             <Link
@@ -61,6 +84,7 @@ const NavBar = () => {
               color="textPrimary"
               to="/gyms"
               className={classes.link}
+              style={{textDecoration: 'none' }}
             >
               Gyms
             </Link>
@@ -70,19 +94,12 @@ const NavBar = () => {
               color="textPrimary"
               to="/classes"
               className={classes.link}
+              style={{textDecoration: 'none' }}
             >
               Classes
             </Link>
-            <Link
-              variant="button"
-              color="textPrimary"
-              href="#"
-              className={classes.link}
-            >
-              Support
-            </Link>
           </nav>
-          {!user && (
+          {!active && (
             <Button
               href="/signin"
               color="primary"
@@ -92,12 +109,13 @@ const NavBar = () => {
               Sign In
             </Button>
           )}{" "}
-          {user && (
+          {active && (
             <Button
               href="/signin"
               color="primary"
               variant="outlined"
               className={classes.link}
+              onClick={handleSignout}
             >
               Sign Out
             </Button>
