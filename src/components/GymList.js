@@ -78,7 +78,7 @@ export default function GymList() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {gyms.map((gym) => (
-                <GymCard gym={gym}/>
+                <GymCard gym={gym} key={gym.id}/>
             ))}
           </Grid>
         </Container>

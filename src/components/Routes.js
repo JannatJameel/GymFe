@@ -10,11 +10,15 @@ import ClassList from "./ClassList";
 const Routes = () => {
   const admin = useSelector((state) => state.userReducer.admin);
   const user = useSelector((state) => state.userReducer.user);
+  const gymClasses = useSelector((state) => state.classReducer.classes);
 
   console.log("Admin", admin);
   console.log("User", user);
+  console.log("Class State", gymClasses);
+
 
   return (
+
     <Switch>
       <Route path="/signup">
         <Signup />
@@ -23,7 +27,7 @@ const Routes = () => {
         <Signin />
       </Route>
       <Route path="/gyms/:gymSlug/classes">
-        <ClassList />
+        <ClassList gymClasses={gymClasses}/>
       </Route>
       <Route path="/gyms">
         <GymList />

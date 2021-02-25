@@ -13,6 +13,11 @@ const classReducer = (state=initialState, action) => {
                 classes: action.payload, 
                 loading: false
             };
+        case types.CREATE_CLASS:
+            return {
+                ...state,
+                classes: [...state.classes, action.payload],
+            };
         default: return state;
     };
 };

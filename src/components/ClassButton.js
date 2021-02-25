@@ -22,9 +22,9 @@ export default function FormDialog() {
 
   const [newClass, setNewClass] = useState({
     name: "",
-    availableSeats: "",
-    bookedSeats: "",
-    price: "",
+    availableSeats: 0,
+    bookedSeats: 0,
+    price: 0,
     date: "",
     time: "",
     gymId: 1,
@@ -49,7 +49,7 @@ export default function FormDialog() {
     setNewClass({ ...newClass, [event.target.name]: event.target.value });
   };
 
-  console.log("Class Test", newClass);
+  console.log("");
 
   return (
     <div>

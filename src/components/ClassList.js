@@ -1,6 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { fetchClasses } from "../store/actions/classActions";
 // Styling
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -39,10 +40,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClassList() {
+export default function ClassList({gymClasses}) {
   const classes = useStyles();
 
-  const gymClasses = useSelector((state) => state.classReducer.classes);
+//   const dispatch = useDispatch();
+//   dispatch(fetchClasses());
+
+//   const gymClasses = useSelector((state) => state.classReducer.classes);
   const { gymSlug } = useParams();
 
   const foundgym = useSelector((state) =>
@@ -52,7 +56,7 @@ export default function ClassList() {
   const filteredClasses = gymClasses.filter(
     (gymClass) => gymClass.gymId === foundgym.id
   );
-  console.log("filterd classes", filteredClasses);
+  console.log("gymClasses", gymClasses);
 
   return (
     <React.Fragment>
@@ -93,7 +97,7 @@ export default function ClassList() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {gymClasses.map((gymClass) => (
-              <ClassCard gymClass={gymClass} />
+              <ClassCard gymClass={gymClass} key={gymClass.id}/>
             ))}
           </Grid>
         </Container>

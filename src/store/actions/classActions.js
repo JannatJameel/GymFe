@@ -22,6 +22,7 @@ export const createClass = (newClass) => {
         `gyms/${newClass.gymId}/classes`,
         newClass
       );
+      console.log("Class from backend", res.data);
       dispatch({
         type: types.CREATE_CLASS,
         payload: res.data,
